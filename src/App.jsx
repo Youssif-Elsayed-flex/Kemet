@@ -18,6 +18,10 @@ import HiddenPlaces from './pages/HiddenPlaces';
 import AntiquitiesAbroad from './pages/AntiquitiesAbroad';
 import Hotels from './pages/Hotels';
 import AboutUs from './pages/AboutUs';
+import Content from './pages/Content';
+import ContentCategory from './pages/ContentCategory';
+import ContentDetail from './pages/ContentDetail';
+import Contact from './pages/Contact';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -45,6 +49,10 @@ const AppContent = () => {
             <Route path="/antiquities" element={<AntiquitiesAbroad />} />
             <Route path="/hotels" element={<Hotels />} />
             <Route path="/about" element={<AboutUs />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/content" element={<Content />} />
+            <Route path="/content/:categoryId" element={<ContentCategory />} />
+            <Route path="/content/:categoryId/:itemId" element={<ContentDetail />} />
           </Routes>
         </AnimatePresence>
       </main>

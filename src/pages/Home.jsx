@@ -2,9 +2,10 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
-import { ArrowRight, Leaf, Globe, Sun } from 'lucide-react';
+import { ArrowRight, Leaf, Globe, Sun, Dribbble } from 'lucide-react';
 import { places } from '../data/places';
 import PlaceCard from '../components/shared/PlaceCard';
+import { contentCategories } from '../data/content';
 
 const Home = () => {
     const { t, language } = useLanguage();

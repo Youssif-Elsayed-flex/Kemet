@@ -6,7 +6,7 @@ export const places = [
             en: "The last surviving wonder of the ancient world, these massive structures were built as tombs for pharaohs.",
             ar: "آخر عجائب الدنيا القديمة الباقية، بنيت هذه الهياكل الضخمة كمقابر للفراعنة."
         },
-        image: "https://images.unsplash.com/photo-1539650116455-8efdbcc6c191?auto=format&fit=crop&q=80",
+        image: "https://images.unsplash.com/photo-1599527016269-02e2c0406856?auto=format&fit=crop&q=80",
         location: { lat: 29.9792, lng: 31.1342 },
         category: "historical",
         rating: 4.9

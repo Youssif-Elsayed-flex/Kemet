@@ -19,24 +19,73 @@ const AIAssistant = () => {
         scrollToBottom();
     }, [messages, isTyping]);
 
-    // Smart mock responses based on keywords
-    const generateResponse = (query) => {
+    // Generate response using AI API
+    const generateResponse = async (query) => {
         const q = query.toLowerCase();
 
-        if (language === 'ar') {
+        try {
+            // Using Hugging Face Inference API (free tier available)
+            // Users can get their API key from https://huggingface.co/settings/tokens
+            const API_KEY = import.meta.env.VITE_HUGGINGFACE_API_KEY || 'hf_demo'; // Demo key for testing
+
+            const systemPrompt = language === 'ar'
+                ? `أنت دليل سياحي ذكي متخصص في مصر. أجب على الأسئلة باللغة العربية بطريقة ودية ومفيدة. قدم معلومات عن المعالم السياحية، الفنادق، المطاعم، والأنشطة في مصر.`
+                : `You are a friendly and knowledgeable AI tourist guide for Egypt. Answer questions in English about Egyptian tourist sites, hotels, restaurants, and activities. Be helpful and concise.`;
+
+            const response = await fetch(
+                'https://api-inference.huggingface.co/models/mistralai/Mixtral-8x7B-Instruct-v0.1',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${API_KEY}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        inputs: `${systemPrompt}\n\nUser: ${query}\nAssistant:`,
+                        parameters: {
+                            max_new_tokens: 150,
+                            temperature: 0.7,
+                            top_p: 0.95,
+                            return_full_text: false,
+                        },
+                    }),
+                }
+            );
+
+            if (response.ok) {
+                const data = await response.json();
+                if (data && data[0] && data[0].generated_text) {
+                    return data[0].generated_text.trim();
+                }
+            }
+
+            // Fall back to enhanced mock responses if API fails
+            throw new Error('API response invalid');
+        } catch (error) {
+            console.log('Using fallback responses:', error);
+            // Enhanced fallback responses
+            return getFallbackResponse(q, language);
+        }
+    };
+
+    // Enhanced fallback responses
+    const getFallbackResponse = (q, lang) => {
+        if (lang === 'ar') {
             if (q.includes('مرحبا') || q.includes('اهلا')) return "أهلاً بك في مصر! أنا دليلك السياحي الذكي. كيف يمكنني مساعدتك اليوم؟";
             if (q.includes('سعر') || q.includes('تكلفة')) return "تختلف الأسعار حسب الموسم والمكان. الفنادق تتراوح بين 50-500 دولار في الليلة. تذاكر الأهرامات حوالي 200 جنيه للمصريين و 540 للأجانب.";
             if (q.includes('اهرامات') || q.includes('جيزة')) return "أهرامات الجيزة هي إحدى عجائب الدنيا السبع. أنصحك بزيارتها في الصباح الباكر لتجنب الزحام والحرارة. لا تفوت ركوب الجمل هناك!";
             if (q.includes('فندق') || q.includes('اقامة')) return "مصر بها فنادق رائعة! في القاهرة أنصحك بفندق ماريوت مينا هاوس لإطلالة ساحرة على الأهرامات، أو النيل ريتز كارلتون في وسط البلد.";
             if (q.includes('طعام') || q.includes('اكل')) return "المطبخ المصري لذيذ جداً! يجب أن تجرب الكشري، الفول والطعمية، والملوخية. مطعم أبو طارق مشهور جداً للكشري.";
-            return "سؤال ممتاز! مصر مليئة بالتاريخ والجمال. هل يمكنك تحديد ما تبحث عنه بالضبط؟ (تاريخ، فنادق، أماكن سياحية، طعام)";
+            if (q.includes('كرة') || q.includes('رياضة')) return "مصر متميزة في الرياضة! خاصة كرة القدم مع الأهلي والزمالك، والاسكواش حيث نحتل المراكز الأولى عالمياً.";
+            return "سؤال ممتاز! مصر مليئة بالتاريخ والجمال. هل يمكنك تحديد ما تبحث عنه بالضبط؟ (تاريخ، فنادق، أماكن سياحية، طعام، رياضة)";
         } else {
             if (q.includes('hi') || q.includes('hello')) return "Welcome to Egypt! I'm your smart tourist guide. How can I help you today?";
             if (q.includes('price') || q.includes('cost')) return "Prices vary by season and location. Hotels range from $50-$500/night. Pyramids tickets are around 540 EGP for tourists.";
             if (q.includes('pyramid') || q.includes('giza')) return "The Giza Pyramids are a must-see! I recommend visiting early morning (8 AM) to beat the crowds and heat. Don't miss the Sphinx!";
             if (q.includes('hotel') || q.includes('stay')) return "Egypt has amazing hospitality! In Cairo, Marriott Mena House offers stunning Pyramid views, while The Nile Ritz-Carlton is great for city vibes.";
             if (q.includes('food') || q.includes('eat')) return "Egyptian cuisine is delicious! You must try Koshary, Ful Medames, and Molokhia. Abou Tarek is famous for the best Koshary in town.";
-            return "Great question! Egypt is full of history and beauty. Could you specify what you're looking for? (History, Hotels, Places, Food)";
+            if (q.includes('sport') || q.includes('football')) return "Egypt excels in sports! Football is huge with Al Ahly and Zamalek, and we dominate world squash rankings!";
+            return "Great question! Egypt is full of history and beauty. Could you specify what you're looking for? (History, Hotels, Places, Food, Sports)";
         }
     };
 
@@ -48,12 +97,20 @@ const AIAssistant = () => {
         setInput('');
         setIsTyping(true);
 
-        // Simulate AI thinking delay
-        setTimeout(() => {
-            const response = generateResponse(userMessage.content);
+        // Get AI response
+        try {
+            const response = await generateResponse(userMessage.content);
             setMessages(prev => [...prev, { role: 'assistant', content: response }]);
+        } catch (error) {
+            setMessages(prev => [...prev, {
+                role: 'assistant',
+                content: language === 'ar'
+                    ? 'عذراً، حدث خطأ. يرجى المحاولة مرة أخرى.'
+                    : 'Sorry, an error occurred. Please try again.'
+            }]);
+        } finally {
             setIsTyping(false);
-        }, 1500);
+        }
     };
 
     return (
@@ -122,8 +179,8 @@ const AIAssistant = () => {
                                         {msg.role === 'user' ? <User className="w-5 h-5" /> : <Bot className="w-5 h-5" />}
                                     </div>
                                     <div className={`max-w-[80%] p-3 rounded-2xl ${msg.role === 'user'
-                                            ? 'bg-gold text-white rounded-tr-none'
-                                            : 'bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 shadow-sm rounded-tl-none'
+                                        ? 'bg-gold text-white rounded-tr-none'
+                                        : 'bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 shadow-sm rounded-tl-none'
                                         }`}>
                                         {msg.content}
                                     </div>

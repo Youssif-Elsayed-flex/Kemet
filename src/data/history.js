@@ -37,6 +37,6 @@ export const history = [
             en: "The era of Muhammad Ali Pasha to the present republic.",
             ar: "عصر محمد علي باشا حتى الجمهورية الحالية."
         },
-        image: "https://images.unsplash.com/photo-1572252009289-9ef4a7719179?auto=format&fit=crop&q=80"
+        image: "https://images.unsplash.com/photo-1550537761-456a2973b5f9?auto=format&fit=crop&q=80"
     }
 ];

@@ -3,12 +3,13 @@ export const translations = {
         nav: {
             home: "Home",
             history: "History",
-            places: "Famous Places",
+            places: "Places",
             sports: "Sports",
             hidden: "Hidden Gems",
             antiquities: "Antiquities Abroad",
             hotels: "Hotels",
-            about: "About Us"
+            about: "About Us",
+            contact: "Contact"
         },
         hero: {
             title: "Discover the Magic of Egypt",
@@ -35,12 +36,13 @@ export const translations = {
         nav: {
             home: "الرئيسية",
             history: "التاريخ",
-            places: "الأماكن الشهيرة",
+            places: "الأماكن",
             sports: "الرياضة",
             hidden: "أماكن مخفية",
             antiquities: "الآثار بالخارج",
             hotels: "الفنادق",
-            about: "من نحن"
+            about: "من نحن",
+            contact: "اتصل بنا"
         },
         hero: {
             title: "اكتشف سحر مصر",
