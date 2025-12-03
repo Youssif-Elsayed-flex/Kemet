@@ -28,9 +28,8 @@ const Places = () => {
     const categories = [
         { id: 'all', label: { en: 'All', ar: 'الكل' } },
         { id: 'famous', label: { en: 'Famous Places', ar: 'أماكن شهيرة' } },
-        { id: 'hidden', label: { en: 'Hidden Gems', ar: 'أماكن مخفية' } },
-        { id: 'antiquities', label: { en: 'Antiquities', ar: 'آثار' } },
-        { id: 'history', label: { en: 'Historical', ar: 'تاريخي' } },
+        { id: 'hidden', label: { en: 'Hidden Gems', ar: 'أماكن منسية' } },
+        { id: 'antiquities', label: { en: 'Antiquities', ar: 'سفرائنا في الخارج' } },
     ];
 
     return (
@@ -54,8 +53,8 @@ const Places = () => {
                                 key={cat.id}
                                 onClick={() => setFilter(cat.id)}
                                 className={`px-6 py-2 rounded-full font-medium transition-all duration-300 transform hover:scale-105 ${filter === cat.id
-                                        ? 'bg-gold text-nile shadow-lg scale-105'
-                                        : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                                    ? 'bg-gold text-nile shadow-lg scale-105'
+                                    : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
                                     }`}
                             >
                                 {language === 'en' ? cat.label.en : cat.label.ar}

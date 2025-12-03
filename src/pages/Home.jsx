@@ -6,6 +6,7 @@ import { ArrowRight, Leaf, Globe, Sun, Dribbble } from 'lucide-react';
 import { places } from '../data/places';
 import PlaceCard from '../components/shared/PlaceCard';
 import { contentCategories } from '../data/content';
+import pyramids from '../assets/pyramids.jpeg';
 
 const Home = () => {
     const { t, language } = useLanguage();
@@ -18,7 +19,7 @@ const Home = () => {
             <section className="relative h-[90vh] flex items-center justify-center overflow-hidden">
                 <div className="absolute inset-0 z-0">
                     <img
-                        src="https://images.unsplash.com/photo-1539650116455-8efdbcc6c191?auto=format&fit=crop&q=80"
+                        src={pyramids}
                         alt="Pyramids"
                         className="w-full h-full object-cover"
                     />
@@ -70,9 +71,9 @@ const Home = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {[
-                            { icon: Leaf, title: "Eco-Friendly", desc: "Promoting responsible travel practices to preserve Egypt's natural beauty." },
-                            { icon: Globe, title: "Cultural Heritage", desc: "Supporting local communities and preserving ancient traditions." },
-                            { icon: Sun, title: "Green Energy", desc: "Encouraging the use of renewable energy in tourism facilities." }
+                            { icon: Leaf, titleKey: "hero.sustainableCards.ecoFriendly", descKey: "hero.sustainableCards.ecoFriendlyDesc" },
+                            { icon: Globe, titleKey: "hero.sustainableCards.culturalHeritage", descKey: "hero.sustainableCards.culturalHeritageDesc" },
+                            { icon: Sun, titleKey: "hero.sustainableCards.greenEnergy", descKey: "hero.sustainableCards.greenEnergyDesc" }
                         ].map((item, index) => (
                             <motion.div
                                 key={index}
@@ -85,8 +86,8 @@ const Home = () => {
                                 <div className="w-16 h-16 mx-auto mb-6 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                                     <item.icon className="w-8 h-8 text-emerald dark:text-emerald-400" />
                                 </div>
-                                <h3 className="text-xl font-bold mb-3 text-gray-800 dark:text-white">{item.title}</h3>
-                                <p className="text-gray-600 dark:text-gray-300">{item.desc}</p>
+                                <h3 className="text-xl font-bold mb-3 text-gray-800 dark:text-white">{t(item.titleKey)}</h3>
+                                <p className="text-gray-600 dark:text-gray-300">{t(item.descKey)}</p>
                             </motion.div>
                         ))}
                     </div>

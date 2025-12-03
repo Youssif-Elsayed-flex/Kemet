@@ -2,11 +2,11 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Trophy, Scroll, Palette } from 'lucide-react';
 import { contentCategories } from '../data/content';
 
 const Content = () => {
-    const { language, t } = useLanguage();
+    const { language } = useLanguage();
 
     const getLocalized = (obj) => {
         if (!obj) return '';
@@ -16,25 +16,25 @@ const Content = () => {
     return (
         <div className="min-h-screen pt-24 pb-20 bg-papyrus dark:bg-gray-900 transition-colors duration-300">
             <div className="container mx-auto px-4">
-                {/* Header */}
-                <div className="text-center mb-16">
+                {/* Hero Section */}
+                <div className="text-center mb-20">
                     <motion.h1
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="text-4xl md:text-5xl font-heading font-bold text-nile dark:text-gold mb-6"
+                        className="text-5xl md:text-6xl font-heading font-bold text-nile dark:text-gold mb-6"
                     >
-                        {t('nav.content')}
+                        {language === 'en' ? 'Explore Egypt' : 'استكشف مصر'}
                     </motion.h1>
-                    <div className="w-24 h-1 bg-gold mx-auto rounded-full mb-6" />
+                    <div className="w-32 h-1 bg-gold mx-auto rounded-full mb-8" />
                     <motion.p
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1 }}
-                        className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto"
+                        transition={{ delay: 0.2 }}
+                        className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto"
                     >
                         {language === 'en'
-                            ? 'Explore the diverse aspects of Egyptian culture, sports, and heritage'
-                            : 'استكشف الجوانب المتنوعة للثقافة والرياضة والتراث المصري'}
+                            ? 'Dive deep into Egyptian culture, sports, and history. Discover the stories that shaped a civilization.'
+                            : 'اغمر نفسك في الثقافة والرياضة والتاريخ المصري. اكتشف القصص التي شكلت حضارة.'}
                     </motion.p>
                 </div>
 
@@ -43,43 +43,52 @@ const Content = () => {
                     {contentCategories.map((category, index) => (
                         <motion.div
                             key={category.id}
-                            initial={{ opacity: 0, y: 20 }}
+                            initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: index * 0.1 }}
+                            transition={{ delay: index * 0.15 }}
                         >
                             <Link
                                 to={`/content/${category.id}`}
-                                className="card group cursor-pointer h-full flex flex-col overflow-hidden"
+                                className="block group h-full"
                             >
-                                {/* Image Section */}
-                                <div className="relative h-64 overflow-hidden">
-                                    <img
-                                        src={category.image}
-                                        alt={getLocalized(category.name)}
-                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                                    />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                <div className="card h-full overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2">
+                                    {/* Image Section with Overlay */}
+                                    <div className="relative h-72 overflow-hidden">
+                                        <img
+                                            src={category.image}
+                                            alt={getLocalized(category.name)}
+                                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
 
-                                    {/* Icon Badge */}
-                                    <div className="absolute top-4 left-4 w-16 h-16 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm rounded-2xl flex items-center justify-center text-3xl shadow-lg transform group-hover:scale-110 transition-transform duration-300">
-                                        {category.icon}
+                                        {/* Category Icon */}
+                                        <div className="absolute top-6 right-6 w-16 h-16 bg-gold rounded-full flex items-center justify-center text-4xl shadow-lg transform group-hover:rotate-12 transition-transform duration-300">
+                                            {category.icon}
+                                        </div>
+
+                                        {/* Title Overlay */}
+                                        <div className="absolute bottom-0 left-0 right-0 p-6">
+                                            <h2 className="text-3xl font-heading font-bold text-white mb-2 transform group-hover:translate-x-2 transition-transform duration-300">
+                                                {getLocalized(category.name)}
+                                            </h2>
+                                        </div>
                                     </div>
-                                </div>
 
-                                {/* Content Section */}
-                                <div className="p-6 flex flex-col flex-grow">
-                                    <h3 className="text-2xl font-heading font-bold mb-3 text-nile dark:text-gold group-hover:text-gold dark:group-hover:text-gold-light transition-colors">
-                                        {getLocalized(category.name)}
-                                    </h3>
+                                    {/* Content Section */}
+                                    <div className="p-6 bg-white dark:bg-gray-800">
+                                        <p className="text-gray-600 dark:text-gray-300 mb-6 line-clamp-3 min-h-[72px]">
+                                            {getLocalized(category.description)}
+                                        </p>
 
-                                    <p className="text-gray-600 dark:text-gray-300 mb-6 flex-grow line-clamp-3">
-                                        {getLocalized(category.description)}
-                                    </p>
-
-                                    {/* Read More Button */}
-                                    <div className="flex items-center gap-2 text-gold group-hover:text-gold-dark dark:group-hover:text-gold-light font-medium transition-colors">
-                                        <span>{t('common.readMore')}</span>
-                                        <ArrowRight className="w-4 h-4 transform group-hover:translate-x-2 transition-transform duration-300" />
+                                        {/* CTA Button */}
+                                        <div className="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-700">
+                                            <span className="text-gold font-bold group-hover:translate-x-2 transition-transform duration-300">
+                                                {language === 'en' ? 'Explore' : 'استكشف'}
+                                            </span>
+                                            <div className="w-10 h-10 rounded-full bg-gold/10 dark:bg-gold/20 flex items-center justify-center group-hover:bg-gold transition-colors duration-300">
+                                                <ArrowRight className="w-5 h-5 text-gold group-hover:text-white transition-colors duration-300" />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </Link>
@@ -87,28 +96,36 @@ const Content = () => {
                     ))}
                 </div>
 
-                {/* Additional Info Section */}
+                {/* Quick Stats Section */}
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4 }}
-                    className="mt-16 bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg"
+                    transition={{ delay: 0.6 }}
+                    className="mt-20 bg-gradient-to-r from-nile to-nile-dark dark:from-gray-800 dark:to-gray-900 rounded-3xl p-8 md:p-12 shadow-xl"
                 >
-                    <h2 className="text-2xl font-heading font-bold text-nile dark:text-gold mb-4">
-                        {language === 'en' ? 'Discover More About Egypt' : 'اكتشف المزيد عن مصر'}
-                    </h2>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
-                        {language === 'en'
-                            ? 'Each category offers in-depth information, stories, and insights into what makes Egypt unique. From world-class sports achievements to ancient cultural heritage, explore everything that defines this magnificent nation.'
-                            : 'تقدم كل فئة معلومات متعمقة وقصص ورؤى حول ما يجعل مصر فريدة من نوعها. من الإنجازات الرياضية العالمية إلى التراث الثقافي القديم، استكشف كل ما يحدد هذه الأمة الرائعة.'}
-                    </p>
-                    <Link
-                        to="/places"
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-gold hover:bg-gold-dark text-white rounded-full font-medium transition-all duration-300 transform hover:scale-105"
-                    >
-                        {language === 'en' ? 'Explore Places' : 'استكشف الأماكن'}
-                        <ArrowRight className="w-4 h-4" />
-                    </Link>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center text-white">
+                        <div className="space-y-2">
+                            <Trophy className="w-12 h-12 mx-auto text-gold" />
+                            <h3 className="text-4xl font-bold font-heading">7+</h3>
+                            <p className="text-white/80">
+                                {language === 'en' ? 'African Cup Titles' : 'ألقاب كأس الأمم الأفريقية'}
+                            </p>
+                        </div>
+                        <div className="space-y-2">
+                            <Scroll className="w-12 h-12 mx-auto text-gold" />
+                            <h3 className="text-4xl font-bold font-heading">7000+</h3>
+                            <p className="text-white/80">
+                                {language === 'en' ? 'Years of History' : 'سنة من التاريخ'}
+                            </p>
+                        </div>
+                        <div className="space-y-2">
+                            <Palette className="w-12 h-12 mx-auto text-gold" />
+                            <h3 className="text-4xl font-bold font-heading">∞</h3>
+                            <p className="text-white/80">
+                                {language === 'en' ? 'Cultural Treasures' : 'كنوز ثقافية'}
+                            </p>
+                        </div>
+                    </div>
                 </motion.div>
             </div>
         </div>
