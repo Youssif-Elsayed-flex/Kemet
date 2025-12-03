@@ -15,6 +15,8 @@ const Header = () => {
         { path: '/', label: 'nav.home' },
         { path: '/places', label: 'nav.places' },
         { path: '/history', label: 'nav.history' },
+        { path: '/translator', label: 'nav.translator' },
+        { path: '/games', label: 'nav.games' },
         { path: '/sports', label: 'nav.sports' },
         { path: '/contact', label: 'nav.contact' },
         { path: '/hotels', label: 'nav.hotels' },

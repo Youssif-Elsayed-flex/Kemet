@@ -27,6 +27,13 @@ export default {
           DEFAULT: '#F9F7F2',
           dark: '#EFEBDD',
         },
+        stone: {
+          DEFAULT: '#8B8B8B',
+          light: '#D6D3D1',
+          dark: '#57534E',
+          200: '#E7E5E4',
+          700: '#44403C',
+        },
         emerald: {
           DEFAULT: '#10B981', // Sustainable green
           dark: '#059669',
@@ -40,6 +47,7 @@ export default {
         'float': 'float 6s ease-in-out infinite',
         'fade-in': 'fadeIn 0.5s ease-out forwards',
         'slide-up': 'slideUp 0.5s ease-out forwards',
+        'glow': 'glow 2s ease-in-out infinite alternate',
       },
       keyframes: {
         float: {
@@ -53,6 +61,10 @@ export default {
         slideUp: {
           '0%': { transform: 'translateY(20px)', opacity: '0' },
           '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+        glow: {
+          '0%': { boxShadow: '0 0 5px #D4AF37' },
+          '100%': { boxShadow: '0 0 20px #D4AF37, 0 0 10px #D4AF37' },
         }
       }
     },

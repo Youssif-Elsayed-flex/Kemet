@@ -10,6 +10,9 @@ import AIAssistant from './components/features/AIAssistant';
 // Pages
 import Home from './pages/Home';
 import History from './pages/History';
+import PersonDetails from './pages/PersonDetails';
+import HieroglyphTranslator from './pages/HieroglyphTranslator';
+import Games from './pages/Games';
 import FamousPlaces from './pages/FamousPlaces';
 import Places from './pages/Places';
 import PlaceDetails from './pages/PlaceDetails';
@@ -41,6 +44,7 @@ const AppContent = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/history" element={<History />} />
+            <Route path="/history/person/:id" element={<PersonDetails />} />
             <Route path="/places" element={<Places />} />
             <Route path="/places/:type/:id" element={<PlaceDetails />} />
             <Route path="/famous-places" element={<FamousPlaces />} />
@@ -53,6 +57,8 @@ const AppContent = () => {
             <Route path="/content" element={<Content />} />
             <Route path="/content/:categoryId" element={<ContentCategory />} />
             <Route path="/content/:categoryId/:itemId" element={<ContentDetail />} />
+            <Route path="/translator" element={<HieroglyphTranslator />} />
+            <Route path="/games" element={<Games />} />
           </Routes>
         </AnimatePresence>
       </main>

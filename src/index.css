@@ -10,7 +10,23 @@
   }
   
   body {
-    @apply bg-papyrus text-gray-900 dark:bg-gray-900 dark:text-papyrus transition-colors duration-300;
+    @apply text-gray-900 dark:text-papyrus transition-colors duration-300;
+    background-image: url('/images/temple-wall.jpg');
+    background-repeat: repeat;
+    background-size: 500px;
+    background-attachment: fixed;
+  }
+
+  /* Overlay to ensure text readability */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    @apply bg-papyrus/90 dark:bg-gray-900/90;
+    z-index: -1;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -20,17 +36,25 @@
 
 @layer components {
   .btn-primary {
-    @apply px-6 py-2 bg-gold hover:bg-gold-dark text-white rounded-full transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1;
+    @apply px-6 py-2 bg-gold hover:bg-gold-dark text-white rounded-full transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 border-2 border-gold-light;
   }
   
   .btn-secondary {
-    @apply px-6 py-2 bg-nile hover:bg-nile-dark text-white rounded-full transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1;
+    @apply px-6 py-2 bg-nile hover:bg-nile-dark text-white rounded-full transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 border-2 border-nile-light;
   }
 
   .card {
-    @apply bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden;
+    @apply bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-stone-200 dark:border-stone-700;
   }
   
+  .stone-card {
+    @apply bg-[#f0e6d2] dark:bg-[#2c241b] rounded-lg shadow-xl border-2 border-[#d4c5a5] dark:border-[#4a3e2f] relative overflow-hidden;
+    box-shadow: 
+      inset 2px 2px 5px rgba(255,255,255,0.4),
+      inset -2px -2px 5px rgba(0,0,0,0.2),
+      5px 5px 15px rgba(0,0,0,0.3);
+  }
+
   .glass-panel {
     @apply bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border border-white/20 dark:border-gray-700/30;
   }
